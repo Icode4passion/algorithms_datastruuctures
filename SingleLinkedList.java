@@ -1,91 +1,98 @@
-class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello world! Linked List ");
-    SingleLinkedList sll = new SingleLinkedList();
-    sll.addNode(10);
-    sll.addNode(20);
-    sll.addNode(30);
-    sll.addNode(40);
-    sll.addNode(50);
-    sll.addNode(60);
-    
+class Node :
+    def __init__(self,data):
+        self.data = data
+        self.next = None
 
-    sll.display();
+#Modify the Linked List eleminating tail node
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.count = 0
+    def addNode(self,data):
+        node = Node(data)
+        self.count +=1        
+        if not self.head:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.next = node
+            self.tail = node
+    def insertAtstart(self,data):
+        node = Node(data)
+        if not self.head:
+            self.head=node            
+        else:
+            node.next = self.head
+            self.head = node
 
-    sll.insertAtEnd(11);
+    def countLinkedList(self):
+        count = 0
+        current = self.head
+        while current is not None:
+            count +=1
+            current = current.next
+        return count
 
-    sll.display();
+    def countInLinkedList(self):
+        return self.count
 
-  }
-}
+    def insertAtEnd(self,data):
+        node = Node(data)
+        if self.head is None:
+            self.head = node
+            return
+        current = self.head
+        while current.next is not None:
+            current = current.next
+        current.next = node
 
-class SingleLinkedList{
+    def display(self):
+        current = self.head
+        if self.head is None:
+            print("List is Empty")
+        while current is not None:
+            print(current.data , end="" + "->")
+            current = current.next
+        print()
 
-    class Node{
-      public int data;
-      public Node next;
+    def remove(self,data):
+          if self.head is None:
+                return
+          current = self.head
+          prev = None
+            #runs iterartion and pointers stop at current aand prev values
+          while current.data != data:
+                prev = current
+                current = current.next
 
-      Node (int data){
-        this.data = data;
-        this.next = next;
-      }
-    }
+          if prev is None:
+                self.head = current.next
+          else:
+                prev.next = current.next
+                
+         
+        
+            
+        
+            
 
-    public Node head = null;
-    public Node tail = null;
+        
+ll =  LinkedList()
 
-    public void addNode(int data){
-
-      // create a new node 
-      Node node = new Node(data);
-
-      if (head == null){
-        head = node;
-        tail = node;
-        //created pointer to head and tail
-        //both are assigned to node as this the first node        
-      }
-      else {
-        tail.next = node;
-        tail = node;
-        //placing the head at its orginal place and moving the tail //pointer for our convinence        
-      }
-    }
-
-    //display the data in node
-
-    public void display(){
-      //create a variable for temp movement 
-      Node current = head;
-      //check for list empty
-      if(head == null){
-        System.out.print("List Empty");
-      }
-      while(current!=null){
-        System.out.print(current.data+"->");
-        //Current next value is assigned to current
-        current = current.next;
-      }
-      System.out.println();
-
-    }
-
-
-    public void insertAtEnd(int data){
-      Node node = new Node(data);
-      if (head == null){
-        //System.out.print("Empty List");
-        head = node;
-        tail = node;
-        return ;
-      }
-      node.next = null;
-      Node current = head;      
-      while(current.next!=null){
-        current = current.next;
-      }
-      current.next = node;
-      return;
-    }
-
-}
+ll.addNode(10)
+ll.addNode(20)
+ll.addNode(30)
+ll.addNode(40)
+ll.insertAtstart(1)
+ll.insertAtEnd(11)
+ll.insertAtEnd(21)
+ll.display()
+ll.remove(21)
+ll.display()
+ll.remove(1)
+ll.display()
+print("Below count prints all the nodes values, since it loops in all the nodes Time complexity is O(N)")
+print("Count" ,ll.countLinkedList())
+print("Below Count prints Nodes that are inserted in the addNode method but not in the insertAtStart its time Complexity is O(1)")
+print("Count" ,ll.countInLinkedList())
